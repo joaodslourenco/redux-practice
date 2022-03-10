@@ -4,8 +4,8 @@ import { counterActions } from '../store'
 
 const Counter = () => {
   /* forma que um componente é subscrito ao store, sendo notificado sempre que houver alteração no estado */
-  const counter = useSelector(state => state.counter)
-  const show = useSelector(state => state.showCounter)
+  const counter = useSelector(state => state.counter.counter)
+  const show = useSelector(state => state.counter.showCounter)
 
   const dispatch = useDispatch()
 
