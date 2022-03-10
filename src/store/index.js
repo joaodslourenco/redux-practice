@@ -1,30 +1,32 @@
-import { createStore } from 'redux'
+import { createSlice, configureStore } from '@reduxjs/toolkit'
 
-const initialValue = {
-  counter: 0
+const initialState = {
+  counter: 0,
+  showCounter: true
 }
 
-/* sempre deve receber o estado anterior e a ação como parâmetros. usar IFs para retornar objetos de acordo com o tipo da ação */
-const counterReducer = (state = initialValue, action) => {
-  if (action.type === 'INCREMENT') {
-    return {
-      counter: state.counter + 1
+const counterSlice = createSlice({
+  name: 'counter',
+  initialState: initialState,
+  reducers: {
+    increment(state) {
+      state.counter++
+    },
+    decrement(state) {
+      state.counter--
+    },
+    increase(state, action) {
+      state.counter = state.counter + action.payload
+    },
+    toggleCounter(state) {
+      state.showCounter = !state.showCounter
     }
   }
-  if (action.type === 'INCREASE') {
-    return {
-      counter: state.counter + action.amount
-    }
-  }
-  if (action.type === 'DECREMENT') {
-    return {
-      counter: state.counter - 1
-    }
-  }
-  return initialValue
-}
+})
 
-/* criação de um store, que deve receber uma função reducer */
-const store = createStore(counterReducer)
+const store = configureStore({
+  reducer: counterSlice.reducer
+})
 
+export const counterActions = counterSlice.actions
 export default store
